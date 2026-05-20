@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../app/theme.dart';
 import '../../services/settings_service.dart';
-// import '../../services/notification_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -16,7 +14,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   bool _isLoading = true;
   bool _dailyNotifications = false;
-  String _notificationTime = '09:00';
+  String _notificationTime = '09:41';
   bool _isRussian = true;
 
   @override
@@ -46,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context: context,
       initialTime: TimeOfDay(
         hour: int.tryParse(parts[0]) ?? 9,
-        minute: int.tryParse(parts[1]) ?? 00,
+        minute: int.tryParse(parts[1]) ?? 41,
       ),
       builder: (context, child) {
         return Theme(
@@ -67,10 +65,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     await _settingsService.setNotificationTime(formatted);
 
-    // if (_dailyNotifications) {
-    //   await NotificationService.instance.scheduleDailyNotification(picked);
-    // }
-
     if (!mounted) return;
 
     setState(() {
@@ -80,25 +74,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _toggleNotifications(bool value) async {
     await _settingsService.setDailyNotifications(value);
-
-    // if (value) {
-    //   if (kIsWeb && mounted) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(
-    //         content: Text('Уведомления работают в мобильной сборке приложения'),
-    //       ),
-    //     );
-    //   }
-
-    //   final parts = _notificationTime.split(':');
-    //   final time = TimeOfDay(
-    //     hour: int.tryParse(parts[0]) ?? 9,
-    //     minute: int.tryParse(parts[1]) ?? 41,
-    //   );
-    //   await NotificationService.instance.scheduleDailyNotification(time);
-    // } else {
-    //   await NotificationService.instance.cancelDailyNotification();
-    // }
 
     if (!mounted) return;
 
